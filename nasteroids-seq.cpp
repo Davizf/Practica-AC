@@ -43,6 +43,22 @@ int main() {
     anyKind.isAsteroid = true;
     asteroids[i] = anyKind;
   }
+  
+  //Creating planets...
+  for(int i = 0; i < num_planets; i++){
+    //Clockwise planet placement... 
+    if(i % 4 == 0){
+      SpaceObject anyKind(xdist(re), 0.0, 0.0, 0.0, mdist(re) * 10);
+    } else if(i % 4 == 1) {
+      SpaceObject anyKind(width, ydist(re), 0.0, 0.0, mdist(re) * 10);
+    } else if(i % 4 == 2){
+      SpaceObject anyKind(xdist(re), height, 0.0, 0.0, mdist(re) * 10);
+    } else if(i % 4 == 3){
+      SpaceObject anyKind(0, ydist(re), 0.0, 0.0, mdist(re) * 10);
+    }
+    anyKind.isAsteroid = false;
+    planets[i] = anyKind;
+  }
 
   return 0;
 }
