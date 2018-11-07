@@ -40,6 +40,7 @@ int main() {
   //Creating asteroids...
   for(int i = 0; i < num_asteroides; i++){
     SpaceObject anyKind(xdist(re), ydist(re), 0.0, 0.0, mdist(re));
+    anyKind.isAsteroid = true;
     asteroids[i] = anyKind;
   }
 
