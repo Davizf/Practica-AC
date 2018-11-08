@@ -13,8 +13,8 @@ int height = 200;
 double mass = 1000;
 double sdm = 50;
 SpaceObject * anyKind;
-vector<SpaceObject*> asteroids;
-vector<SpaceObject*> planets;
+vector<SpaceObject> asteroids;
+vector<SpaceObject> planets;
 
 int main() {
   //Input
@@ -45,7 +45,7 @@ int main() {
   for(int i = 0; i < num_asteroids; i++){
     anyKind = new SpaceObject(xdist(re), ydist(re), 0.0, 0.0, mdist(re));
     anyKind->isAsteroid = true;
-    asteroids.push_back(anyKind);
+    asteroids.push_back(*anyKind);
     delete anyKind;
   }
 
@@ -62,7 +62,7 @@ int main() {
       anyKind = new SpaceObject(xdist(re), height, 0.0, 0.0, mdist(re) * 10);
     }
     anyKind->isAsteroid = false;
-    planets.push_back(anyKind);
+    planets.push_back(*anyKind);
     delete anyKind;
   }
 
