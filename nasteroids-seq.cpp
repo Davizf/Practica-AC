@@ -18,11 +18,11 @@ int main() {
   //Input
   cout << "Enter the number of asteroids:";
   cin >> num_asteroids;
-  cerr << "Enter the number of iterations:";
+  cout << "Enter the number of iterations:";
   cin >> num_iterations;
-  cerr << "Enter the number of planets:";
+  cout << "Enter the number of planets:";
   cin >> num_planets;
-  cerr << "Enter the seed number:";
+  cout << "Enter the seed number:";
   cin >> seed;
 
   //Check input conditions
