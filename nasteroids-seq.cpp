@@ -96,6 +96,10 @@ int main() {
         }
         //Proceed the sum of forces if it is not the same asteroid
         if(j != k) {
+          if(distance_between_elements(asteroids[j], asteroids[k]) < 2){
+            asteroids[j].collides = k;
+          }
+
           forces = normal_movement(asteroids[j], asteroids[k]);
           forceX[j] += forces[0];
           forceY[j] += forces[1];
@@ -103,9 +107,14 @@ int main() {
       }
     }
     //Update coordinates and speeds
-    //for(int m = 0; m < asteroids.size(); m++){
-      //change_element_position(asteroids[m],forceX[m], forceY[m]);
-    //}       
+    for(int m = 0; m < asteroids.size(); m++){
+      if(asteroids[m].collides == -1){
+        change_element_position(&asteroids[m],forceX[m], forceY[m]);
+      } else {
+        collision_handling(asteroids[m], asteroids[asteroids[m].collides]);
+        asteroids[m].collides = -1;
+      }
+    }       
   }
 
 
