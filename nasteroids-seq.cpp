@@ -72,12 +72,12 @@ int main() {
   //Initial configuration
   file << num_asteroids << " " << num_iterations << " " << num_planets << " " << seed << "\n";
   //Asteroids'data
-  for(int i = 0; i < num_asteroids; i++){
-    file << asteroids[i]->x << " " << asteroids[i]->y << " " << asteroids[i]->m << "\n";
+  for(auto &asteroids: asteroids){
+    file << asteroids.x << " " << asteroids.y << " " << asteroids.m << "\n";
   }
   //Planets'data
-  for(int i = 0; i < num_planets; i++){
-    file << planets[i]->x << " " << planets[i]->y << " " << planets[i]->m << "\n";
+  for(auto &planets: planets){
+    file << planets.x << " " << planets.y << " " << planets.m << "\n";
   }
 
 
