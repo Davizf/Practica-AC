@@ -79,19 +79,19 @@ int main() {
   init.close();
 
   //Implementate the movements of asteroids
-  vector<double> forceX (1);
-  vector<double> forceY (1);
+  double forceX;
+  double forceY;
   for(int i = 0; i < num_iterations; i++){
     for(int j = 0; j < num_asteroids; j++){
       //reset the values of the forces for each axis
-      forceX.at(0) = 0;
-      forceY.at(0) = 0;
+      forceX = 0;
+      forceY = 0;
       for(int k = 0; k < num_asteroids; k++){
         //Proceed the sum of forces if it is not the same asteroid
         if(j!=k){
           //Sum the forces for each axis
-          forceX.at(0) += normal_movement(asteroids[j],asteroids[k])[0];
-          forceY.at(0) += normal_movement(asteroids[j],asteroids[k])[1];
+          forceX += normal_movement(asteroids[j],asteroids[k])[0];
+          forceY += normal_movement(asteroids[j],asteroids[k])[1];
         }
       }
       //Update coordinates and speeds

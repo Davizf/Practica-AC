@@ -61,27 +61,17 @@ vector<double> normal_movement(SpaceObject n1, SpaceObject n2) {
 	return results;
 }
 
-auto change_element_position(SpaceObject *n1, vector<double>& x_axis_forces, vector<double>& y_axis_forces) {
+auto change_element_position(SpaceObject *n1, double x_axis_forces, double y_axis_forces) {
 	double accel_x_axis;
 	double accel_y_axis;
 	double x_axis_speed;
 	double y_axis_speed;
 	double x_axis_new_pos;
 	double y_axis_new_pos;
-	double total_forces = 0;
 
-	for(auto &force : x_axis_forces) {
-		total_forces += force;
-	}
+	accel_x_axis = x_axis_forces / n1->m;
 
-	accel_x_axis = total_forces / n1->m;
-	total_forces = 0;
-
-	for(auto &force : y_axis_forces) {
-		total_forces += force;
-	}
-
-	accel_y_axis = total_forces / n1->m;
+	accel_y_axis = y_axis_forces / n1->m;
 
 	x_axis_speed = n1->vx + (accel_x_axis * time_interval);
 	y_axis_speed = n1->vy + (accel_y_axis * time_interval);
