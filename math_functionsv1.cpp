@@ -7,6 +7,8 @@
 #include "SpaceObject.h"
 using namespace std;
 
+const double mass = 1000;
+const double sdm = 50;
 const double gravity = 6.674e-5;
 const double time_interval = 0.1;
 const double minimal_distance = 2.0;

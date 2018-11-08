@@ -2,16 +2,13 @@
 #include <random>
 #include "SpaceObject.h"
 #include <fstream>
+#include"math_functionsv1.cpp"
 using namespace std;
 
 int num_asteroids;
 int num_iterations;
 int num_planets;
 int seed;
-int width = 200;
-int height = 200;
-double mass = 1000;
-double sdm = 50;
 SpaceObject * anyKind;
 vector<SpaceObject> asteroids;
 vector<SpaceObject> planets;
@@ -67,21 +64,50 @@ int main() {
   }
 
   //Generating init_conf_txt
-  ofstream file;
-  file.open("init_conf_txt");
+  ofstream init;
+  init.open("init_conf.txt");
   //Initial configuration
-  file << num_asteroids << " " << num_iterations << " " << num_planets << " " << seed << "\n";
+  init << num_asteroids << " " << num_iterations << " " << num_planets << " " << seed << "\n";
   //Asteroids'data
   for(auto &asteroids: asteroids){
-    file << asteroids.x << " " << asteroids.y << " " << asteroids.m << "\n";
+    init << asteroids.x << " " << asteroids.y << " " << asteroids.m << "\n";
   }
   //Planets'data
   for(auto &planets: planets){
-    file << planets.x << " " << planets.y << " " << planets.m << "\n";
+    init << planets.x << " " << planets.y << " " << planets.m << "\n";
+  }
+  init.close();
+
+  //Implementate the movements of asteroids
+  vector<double> forceX (1);
+  vector<double> forceY (1);
+  for(int i = 0; i < num_iterations; i++){
+    for(int j = 0; j < num_asteroids; j++){
+      //reset the values of the forces for each axis
+      forceX.at(0) = 0;
+      forceY.at(0) = 0;
+      for(int k = 0; k < num_asteroids; k++){
+        //Proceed the sum of forces if it is not the same asteroid
+        if(j!=k){
+          //Sum the forces for each axis
+          forceX.at(0) += normal_movement(asteroids[j],asteroids[k])[0];
+          forceY.at(0) += normal_movement(asteroids[j],asteroids[k])[1];
+        }
+      }
+      //Update coordinates and speeds
+      change_element_position(&asteroids[j],forceX, forceY);
+    }
   }
 
 
-  file.close();
+  //Generating out.txt
+  ofstream out;
+  out.open("out.txt");
+  //Storing final data
+  for(auto &asteroids: asteroids){
+    out << asteroids.x << " " << asteroids.y << " " << asteroids.vx << " " << asteroids.vy << " " << asteroids.m << "\n";
+  }
+  out.close();
 
   return 0;
 }
