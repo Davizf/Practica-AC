@@ -11,8 +11,9 @@ int width = 200;
 int height = 200;
 double mass = 1000;
 double sdm = 50;
-vector<SpaceObject> asteroids;
-vector<SpaceObject> planets;
+SpaceObject * anyKind;
+vector<SpaceObject*> asteroids;
+vector<SpaceObject*> planets;
 
 int main() {
   //Input
@@ -41,26 +42,27 @@ int main() {
 
   //Creating asteroids...
   for(int i = 0; i < num_asteroids; i++){
-    SpaceObject anyKind(xdist(re), ydist(re), 0.0, 0.0, mdist(re));
-    anyKind.isAsteroid = true;
-    asteroids[i] = anyKind;
+    anyKind = new SpaceObject(xdist(re), ydist(re), 0.0, 0.0, mdist(re));
+    anyKind->isAsteroid = true;
+    asteroids.push_back(anyKind);
+    delete anyKind;
   }
 
   //Creating planets...
   for(int i = 0; i < num_planets; i++){
-    SpaceObject anyKind(0.0,0.0,0.0,0.0,0.0);
     //Clockwise planet placement...
     if(i % 4 == 0){
-      SpaceObject anyKind(xdist(re), height, 0.0, 0.0, mdist(re) * 10);
+      anyKind = new SpaceObject(xdist(re), height, 0.0, 0.0, mdist(re) * 10);
     } else if(i % 4 == 1) {
-      SpaceObject anyKind(0, ydist(re), 0.0, 0.0, mdist(re) * 10);
+      anyKind = new SpaceObject(0, ydist(re), 0.0, 0.0, mdist(re) * 10);
     } else if(i % 4 == 2){
-      SpaceObject anyKind(xdist(re), 0, 0.0, 0.0, mdist(re) * 10);
+      anyKind = new SpaceObject(xdist(re), 0, 0.0, 0.0, mdist(re) * 10);
     } else if(i % 4 == 3){
-      SpaceObject anyKind(width, ydist(re), 0.0, 0.0, mdist(re) * 10);
+      anyKind = new SpaceObject(width, ydist(re), 0.0, 0.0, mdist(re) * 10);
     }
-    anyKind.isAsteroid = false;
-    planets[i] = anyKind;
+    anyKind->isAsteroid = false;
+    planets.push_back(anyKind);
+    delete anyKind;
   }
 
   return 0;
