@@ -79,8 +79,8 @@ int main() {
   init.close();
 
   //Implementate the movements of asteroids
-  vector<double> forceX;
-  vector<double> forceY;
+  vector<double> forceX (num_asteroids);
+  vector<double> forceY (num_asteroids);
   vector<double> forces;
   //Number of iterations
   for(int i = 0; i < num_iterations; i++){
