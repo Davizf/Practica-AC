@@ -50,8 +50,8 @@ vector<double> normal_movement(SpaceObject n1, SpaceObject n2) {
 	cout << "angle " << angle << "\n";
 	cout << "distance " << distance_between_n1_n2 << "\n";
 	//Second, we have to calculate forces
-	n1_x_axis_force = ((gravity * n1.m * n2.m) / (distance_between_n1_n2)) * cos(angle);
-	n1_y_axis_force = ((gravity * n1.m * n2.m) / (distance_between_n1_n2)) * sin(angle);
+	n1_x_axis_force = ((gravity * n1.m * n2.m) / pow(distance_between_n1_n2,2)) * cos(angle);
+	n1_y_axis_force = ((gravity * n1.m * n2.m) / pow(distance_between_n1_n2,2)) * sin(angle);
 
 	if (n1_x_axis_force > 200) n1_x_axis_force = 200;
 	if (n1_y_axis_force > 200) n1_y_axis_force = 200;
