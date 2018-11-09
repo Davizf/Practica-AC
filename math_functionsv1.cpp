@@ -69,7 +69,7 @@ vector<double> normal_movement(SpaceObject n1, SpaceObject n2) {
 	}else if((n1.x < n2.x) && (n1.y == n2.y)){
 		n1_y_axis_force = 0;
 	}else if(n1.x > n2.x){
-		n1_y_axis_force *= -1;
+		n1_x_axis_force *= -1;
 	}else if(n1.y > n2.y){
 		n1_y_axis_force *= -1;
 	}
