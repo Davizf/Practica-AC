@@ -1,5 +1,5 @@
 <b>Problemas actuales</b><br/>
-Carlos:  
+Carlos: Aunque no consigue los mismos resultados que el programa del profesor, el resultado es mucho más preciso que en la versión anterior. Las velocidades salen muy muy distintas. No sabemos el motivo. 
 
 David: No consigue los mismos resultados que el programa del profesor
 
