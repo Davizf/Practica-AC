@@ -1,4 +1,4 @@
-<b>Problemas actuales</b>
+<b>Problemas actuales</b><br/>
 Carlos:  
 
 David: No consigue los mismos resultados que el programa del profesor
