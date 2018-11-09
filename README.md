@@ -1,6 +1,6 @@
 Carlos:  
 
-David: 
+David: Ahora faltaria comprobar con el fichero de salida del profesor introduciendo los mismos datos. He intentado ejecutar el del profesor pero su fichero de salida tienen todas velocidades a 0.
 
 Juanjo:
 
