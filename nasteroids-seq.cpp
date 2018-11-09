@@ -77,7 +77,7 @@ int main() {
     init << planets.x << " " << planets.y << " " << planets.m << "\n";
   }
   init.close();
-
+  
   //Implementate the movements of asteroids
   vector<double> forceX (num_asteroids);
   vector<double> forceY (num_asteroids);
@@ -86,35 +86,39 @@ int main() {
   for(int i = 0; i < num_iterations; i++){
     //Fixing one asteroid to compare itself to others asteroids/planets
     for(int j = 0; j < num_asteroids; j++){
-      //Compare with other asteroids
+      //Compare with other asteroids     
       for(int k = 0; k < num_asteroids; k++){
-        //Compare with planets
-        for(int l = 0; l < num_planets; l++){
-          forces = normal_movement(asteroids[j], planets[l]);
-          forceX[j] += forces[0];
-          forceY[j] += forces[1];
-        }
         //Proceed the sum of forces if it is not the same asteroid
         if(j != k) {
           if(distance_between_elements(asteroids[j], asteroids[k]) < 2){
             asteroids[j].collides = k;
           }
-
           forces = normal_movement(asteroids[j], asteroids[k]);
+          if(j > k) {
+            forceX[j] -= forces[0];
+            forceY[j] -= forces[1];
+          } else {
+            forceX[j] += forces[0];
+            forceY[j] += forces[1];
+          }
+        }     
+        //Compare with planets
+        for(int l = 0; l < num_planets; l++){
+          forces = normal_movement(asteroids[j], planets[l]);
           forceX[j] += forces[0];
           forceY[j] += forces[1];
-        }
+        }        
       }
     }
     //Update coordinates and speeds
-    for(int m = 0; m < num_asteroids; m++){
+    for(int m = 0; m < asteroids.size(); m++){
       if(asteroids[m].collides == -1){
         change_element_position(&asteroids[m],forceX[m], forceY[m]);
       } else {
         collision_handling(asteroids[m], asteroids[asteroids[m].collides]);
         asteroids[m].collides = -1;
       }
-    }
+    }       
   }
 
 
