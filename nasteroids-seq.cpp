@@ -86,8 +86,8 @@ int main() {
   for(int i = 0; i < num_iterations; i++){
     //Fixing one asteroid to compare itself to others asteroids/planets
     for(int j = 0; j < num_asteroids; j++){
-      //Compare with other asteroids     
-      for(int k = 0; k < num_asteroids; k++){     
+      //Compare with other asteroids
+      for(int k = 0; k < num_asteroids; k++){
         //Compare with planets
         for(int l = 0; l < num_planets; l++){
           forces = normal_movement(asteroids[j], planets[l]);
@@ -103,18 +103,18 @@ int main() {
           forces = normal_movement(asteroids[j], asteroids[k]);
           forceX[j] += forces[0];
           forceY[j] += forces[1];
-        }        
+        }
       }
     }
     //Update coordinates and speeds
-    for(int m = 0; m < asteroids.size(); m++){
+    for(int m = 0; m < num_asteroids; m++){
       if(asteroids[m].collides == -1){
         change_element_position(&asteroids[m],forceX[m], forceY[m]);
       } else {
         collision_handling(asteroids[m], asteroids[asteroids[m].collides]);
         asteroids[m].collides = -1;
       }
-    }       
+    }
   }
 
 
