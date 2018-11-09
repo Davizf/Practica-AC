@@ -83,10 +83,11 @@ int main() {
   vector<double> forceY (num_asteroids);
   vector<double> forces;
   //Number of iterations
-  for(int i = 0; i < num_iterations; i++){
+    for(int i = 0; i < num_iterations; i++){
     //Fixing one asteroid to compare itself to others asteroids/planets
     for(int j = 0; j < num_asteroids; j++){
       //Compare with other asteroids
+
       for(int k = 0; k < num_asteroids; k++){
         //Proceed the sum of forces if it is not the same asteroid
         if(j != k) {
@@ -95,20 +96,35 @@ int main() {
           }
           forces = normal_movement(asteroids[j], asteroids[k]);
           if(j > k) {
+
             forceX[j] -= forces[0];
             forceY[j] -= forces[1];
           } else {
             forceX[j] += forces[0];
             forceY[j] += forces[1];
           }
-        }
-        //Compare with planets
-        for(int l = 0; l < num_planets; l++){
-          forces = normal_movement(asteroids[j], planets[l]);
-          forceX[j] += forces[0];
-          forceY[j] += forces[1];
+          /*
+          cout << forceX[j] << '\n';
+          cout << forceY[j] << '\n';
+          */
         }
       }
+       //Compare with planets
+        for(int l = 0; l < num_planets; l++){
+          forces = normal_movement(asteroids[j], planets[l]);
+          if((asteroids[j].x > planets[l].x) || (asteroids[j].y > planets[l].y)){
+            forceX[j] -= forces[0];
+            forceY[j] -= forces[1];
+          }else{
+            forceX[j] += forces[0];
+            forceY[j] += forces[1];
+          }
+          /*
+          cout << "pla" << '\n';
+          cout << forceX[j] << '\n';
+          cout << forceY[j] << '\n';
+          */
+        }
     }
     //Update coordinates and speeds
     for(int m = 0; m < num_asteroids; m++){
