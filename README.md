@@ -1,6 +1,6 @@
 Carlos:  
 
-David: He ejecutado el programa del profesor introduciendo los mismos datos, y el resultado de out.txt parecen ser identicos. 
+David: 
 
 Juanjo:
 
