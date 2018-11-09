@@ -4,6 +4,7 @@
 #include <fstream>
 #include"math_functionsv1.cpp"
 using namespace std;
+#include <iomanip>
 
 int num_asteroids;
 int num_iterations;
@@ -70,11 +71,11 @@ int main() {
   init << num_asteroids << " " << num_iterations << " " << num_planets << " " << seed << "\n";
   //Asteroids'data
   for(auto &asteroids: asteroids){
-    init << asteroids.x << " " << asteroids.y << " " << asteroids.m << "\n";
+    init << fixed << setprecision(3)  << asteroids.x << " " << asteroids.y << " " << asteroids.m << "\n";
   }
   //Planets'data
   for(auto &planets: planets){
-    init << planets.x << " " << planets.y << " " << planets.m << "\n";
+    init << fixed << setprecision(3) << planets.x << " " << planets.y << " " << planets.m << "\n";
   }
   init.close();
 
@@ -149,7 +150,7 @@ int main() {
   out.open("out.txt");
   //Storing final data
   for(auto &asteroids: asteroids){
-    out << asteroids.x << " " << asteroids.y << " " << asteroids.vx << " " << asteroids.vy << " " << asteroids.m << "\n";
+    out << fixed << setprecision(3) << asteroids.x << " " << asteroids.y << " " << asteroids.vx << " " << asteroids.vy << " " << asteroids.m << "\n";
   }
   out.close();
 
