@@ -14,19 +14,19 @@ SpaceObject * anyKind;
 vector<SpaceObject> asteroids;
 vector<SpaceObject> planets;
 
-int main() {
-  //Input
-  cout << "Enter the number of asteroids:";
-  cin >> num_asteroids;
-  cout << "Enter the number of iterations:";
-  cin >> num_iterations;
-  cout << "Enter the number of planets:";
-  cin >> num_planets;
-  cout << "Enter the seed number:";
-  cin >> seed;
+int main(int argc, char *argv[]) {
 
   //Check input conditions
-  if(num_asteroids<0 || num_iterations<0 || num_planets<0 || seed<=0){
+  if(argc == 5 ){
+    num_asteroids = atoi(argv[1]);
+    num_iterations = atoi(argv[2]);
+    num_planets = atoi(argv[3]);
+    seed = atoi(argv[4]);
+    if(num_asteroids<0 || num_iterations<0 || num_planets<0 || seed<=0){
+      cout << "nasteroids-seq: Wrong arguments.\nCorrect use:\nnasteroid-seq num_asteroids num_iterations num_planets seed\n";
+      return -1;
+    }
+  }else{
     cout << "nasteroids-seq: Wrong arguments.\nCorrect use:\nnasteroid-seq num_asteroids num_iterations num_planets seed\n";
     return -1;
   }
@@ -99,7 +99,7 @@ int main() {
             asteroids[k].collisions++;
             map_collisions[j][k] = true;
             map_collisions[k][j] = true;
-          }          
+          }
             forces = normal_movement(asteroids[j], asteroids[k]);
             forceX[j] += forces[0];
             forceY[j] += forces[1];
@@ -132,8 +132,8 @@ int main() {
             map_collisions[n][m] = false;
             collision_handling(&asteroids[m], &asteroids[n]);
             asteroids[m].collisions -= 1;
-            asteroids[n].collisions -= 1;                    
-          }         
+            asteroids[n].collisions -= 1;
+          }
         }
       }
     }
