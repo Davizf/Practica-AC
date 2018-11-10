@@ -1,7 +1,9 @@
 <b>Problemas actuales</b><br/>
-Carlos: Aunque no consigue los mismos resultados que el programa del profesor, el resultado es mucho más preciso que en la versión anterior. Las velocidades salen muy muy distintas. No sabemos el motivo. 
+Carlos:
 
-David: No consigue los mismos resultados que el programa del profesor
+David: 
+- Problema de segmentation fault al introducir valores grandes
+- Pequeñas diferencias de decimales comparando con la versión del profesor. Una posible solución es intentar el redondeo ( sin probar todavía) 
 
 Juanjo:
 
