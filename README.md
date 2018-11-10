@@ -2,8 +2,6 @@
 Carlos:
 
 David: 
-- Problema de segmentation fault al introducir valores grandes
-- Pequeñas diferencias de decimales comparando con la versión del profesor. Una posible solución es intentar el redondeo ( sin probar todavía) 
 
 Juanjo:
 
