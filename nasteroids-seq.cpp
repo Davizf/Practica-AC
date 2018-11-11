@@ -17,7 +17,7 @@ vector<SpaceObject> planets;
 int main(int argc, char *argv[]) {
 
   //Check input conditions
-  if(argc == 5 ){
+  if(argc == 5){
     num_asteroids = atoi(argv[1]);
     num_iterations = atoi(argv[2]);
     num_planets = atoi(argv[3]);
@@ -94,17 +94,19 @@ int main(int argc, char *argv[]) {
       for(int k = 0; k < num_asteroids; k++){
         //Proceed the sum of forces if it is not the same asteroid
         if((j != k) && (j < k)) {
-          if(distance_between_elements(asteroids[j], asteroids[k]) < 2){
+          if(distance_between_elements(asteroids[j], asteroids[k]) <= 2){
             asteroids[j].collisions++;
             asteroids[k].collisions++;
             map_collisions[j][k] = true;
             map_collisions[k][j] = true;
-          }
+          }else{
             forces = normal_movement(asteroids[j], asteroids[k]);
             forceX[j] += forces[0];
             forceY[j] += forces[1];
             forceX[k] -= forces[0];
             forceY[k] -= forces[1];
+          }
+
         }
       }
        //cout << j << " " << forceX[j] << " " << forceY[j] << "\n";
