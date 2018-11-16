@@ -1,5 +1,5 @@
 <b>Problemas actuales</b><br/>
-Carlos:
+Carlos: Falta mejorar la precisión de la versión paralela. (Vigilar velocidades)
 
 David: 
 
