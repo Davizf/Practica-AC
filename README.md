@@ -1,5 +1,5 @@
 <b>Problemas actuales</b><br/>
-Carlos: Falta mejorar la precisión de la versión paralela. (Vigilar velocidades)
+Carlos: Resultados precisos comparando con la versión secuencial. La versión paralela ya es más rápida que la secuencial, pero estamos seguros de que se podría optimizar todavía más.
 
 David: 
 
