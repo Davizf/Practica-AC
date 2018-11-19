@@ -1,7 +1,7 @@
 <b>Problemas actuales</b><br/>
 Carlos: Resultados precisos comparando con la versión secuencial. La versión paralela ya es más rápida que la secuencial, pero estamos seguros de que se podría optimizar todavía más.
 
-David: En la versión paralela para dos ejecuciones con valores de entradas idénticas pueden salir resultados diferentes. Necesitad de implementar más mecanismos de sincronización.
+David: En la versión paralela para dos ejecuciones con valores de entradas idénticas pueden salir resultados diferentes. Necesitad de implementar más mecanismos de sincronización en algunas partes.
 
 Juanjo: Ya sale muy parecido al profe pero en algunos casos , salen cosas con cas una unidad de variación
 
