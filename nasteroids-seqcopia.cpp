@@ -14,7 +14,7 @@ SpaceObject * anyKind;
 vector<SpaceObject> asteroids;
 vector<SpaceObject> planets;
 
-int main() {
+int main(int argc, char *argv[]) {
   //Input
   cout << "Enter the number of asteroids:";
   cin >> num_asteroids;
@@ -26,7 +26,16 @@ int main() {
   cin >> seed;
 
   //Check input conditions
-  if(num_asteroids<0 || num_iterations<0 || num_planets<0 || seed<=0){
+  if(argc == 5){
+    num_asteroids = atoi(argv[1]);
+    num_iterations = atoi(argv[2]);
+    num_planets = atoi(argv[3]);
+    seed = atoi(argv[4]);
+    if(num_asteroids<0 || num_iterations<0 || num_planets<0 || seed<=0){
+      cout << "nasteroids-seq: Wrong arguments.\nCorrect use:\nnasteroid-seq num_asteroids num_iterations num_planets seed\n";
+      return -1;
+    }
+  }else{
     cout << "nasteroids-seq: Wrong arguments.\nCorrect use:\nnasteroid-seq num_asteroids num_iterations num_planets seed\n";
     return -1;
   }
