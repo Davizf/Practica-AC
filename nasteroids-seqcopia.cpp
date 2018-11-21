@@ -112,11 +112,9 @@ int main(int argc, char *argv[]) {
     }
 
     for(int l = 0; l < num_planets; l++){
-      if(distance_between_elements(asteroids[j], planets[l]) > 2){
         forces = normal_movement(asteroids[j], planets[l]);
         forceX[j] += forces[0];
         forceY[j] += forces[1];
-      }
     }
   }
     //Update coordinates and speeds
