@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
   vector<double> forceX (num_asteroids);
   vector<double> forceY (num_asteroids);
   vector<double> forces (2);
-  
+
   //Number of iterations
   for(int i = 0; i < num_iterations; i++){
     //cout << "Nº iteracion: " << i << "\n";
@@ -117,12 +117,21 @@ int main(int argc, char *argv[]) {
         forceY[j] += forces[1];
     }
   }
+
+
+
+
     //Update coordinates and speeds
     for(int m = 0; m < num_asteroids; m++){
       change_element_position(&asteroids[m], forceX[m], forceY[m]);
     }
+    
+    //Possibles collisions with edges
+    for(int z = 0; z < num_asteroids; z++){
+      edge_handling(&asteroids[z],i);
+    }
 
-    //Possibles collisions
+    //Possibles collisions between asteroids
     for(int n = 0; n < num_asteroids; n++){
 
       for(int o = 0; o < num_asteroids; o++){
@@ -140,6 +149,7 @@ int main(int argc, char *argv[]) {
     //If there are collisions position changes
     for(int p = 0; p < num_asteroids; p++){
       if(asteroids[p].collisions != 0){
+        cout << "colission!!" << endl;
         asteroids[p].x = asteroids[p].before_x;
         asteroids[p].y = asteroids[p].before_y;
         change_element_position(&asteroids[p], forceX[p], forceY[p]);
