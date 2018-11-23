@@ -125,11 +125,7 @@ int main(int argc, char *argv[]) {
     for(int m = 0; m < num_asteroids; m++){
       change_element_position(&asteroids[m], forceX[m], forceY[m]);
     }
-    
-    //Possibles collisions with edges
-    for(int z = 0; z < num_asteroids; z++){
-      edge_handling(&asteroids[z],i);
-    }
+
 
     //Possibles collisions between asteroids
     for(int n = 0; n < num_asteroids; n++){
