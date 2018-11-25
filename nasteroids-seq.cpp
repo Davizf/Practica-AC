@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "SpaceObject.h"
 #include <fstream>
-#include "math_functionsv1.cpp"
+#include "math_functions_seq.cpp"
 #include <iomanip>
 #include <time.h>
 using namespace std;
@@ -18,6 +18,9 @@ int seed;
 SpaceObject * anyKind;
 vector<SpaceObject> asteroids;
 vector<SpaceObject> planets;
+
+vector<double> forceX;
+vector<double> forceY;
 
 int main(int argc, char *argv[]) {
   //Check input conditions
@@ -82,8 +85,8 @@ int main(int argc, char *argv[]) {
   init.close();
 
   //Implementate the movements of asteroids
-  vector<double> forceX (num_asteroids);
-  vector<double> forceY (num_asteroids);
+  forceX.resize(num_asteroids);
+  forceY.resize(num_asteroids);
   vector<double> forces (2);
 
   //Number of iterations
@@ -101,8 +104,8 @@ int main(int argc, char *argv[]) {
     for(int k = 0; k < num_asteroids; k++){
       //Proceed the sum of forces if it is not the same asteroid
       if((j != k) && (j < k)) {
-        if(distance_between_elements(asteroids[j], asteroids[k]) > 2){
-          forces = normal_movement(asteroids[j], asteroids[k]);
+        if(distance_between_elements(&asteroids[j], &asteroids[k]) > 2){
+          forces = normal_movement(&asteroids[j], &asteroids[k]);
           forceX[j] += forces[0];
           forceY[j] += forces[1];
           forceX[k] -= forces[0];
@@ -112,7 +115,7 @@ int main(int argc, char *argv[]) {
     }
 
     for(int l = 0; l < num_planets; l++){
-        forces = normal_movement(asteroids[j], planets[l]);
+        forces = normal_movement(&asteroids[j], &planets[l]);
         forceX[j] += forces[0];
         forceY[j] += forces[1];
     }
@@ -133,7 +136,7 @@ int main(int argc, char *argv[]) {
       for(int o = 0; o < num_asteroids; o++){
 
         if((n != o) && (n < o)){
-          if((distance_between_elements(asteroids[n], asteroids[o]) <= 2) && (i > 0)){
+          if((distance_between_elements(&asteroids[n], &asteroids[o]) <= 2) && (i > 0)){
             collision_handling(&asteroids[n], &asteroids[o]);
             asteroids[n].collisions++;
             asteroids[o].collisions++;
@@ -145,7 +148,6 @@ int main(int argc, char *argv[]) {
     //If there are collisions position changes
     for(int p = 0; p < num_asteroids; p++){
       if(asteroids[p].collisions != 0){
-        cout << "colission!!" << endl;
         asteroids[p].x = asteroids[p].before_x;
         asteroids[p].y = asteroids[p].before_y;
         change_element_position(&asteroids[p], forceX[p], forceY[p]);
@@ -153,42 +155,6 @@ int main(int argc, char *argv[]) {
       }
     }
 
-
-
-          //if(map_collisions[m][n]){
-            /*
-            cout << "¡Función de choque invocada!\n";
-            cout << "Nº colisiones del asteroide 1: " << m << " " << asteroids[m].collisions << "\n";
-            cout << "Nº colisiones del asteroide 2: " << n << " " << asteroids[n].collisions << "\n";
-            cout << "Velocidad del asteroide 1 x: " << m << " " << asteroids[m].vx << "\n";
-            cout << "Velocidad del asteroide 1 y: " << m << " " << asteroids[m].vy << "\n";
-            cout << "Fuerza del asteroide 1 x: " << m << " " << forceX[m] << "\n";
-            cout << "Fuerza del asteroide 1 y: " << m << " " << forceY[m] << "\n";
-            cout << "Velocidad del asteroide 2 x: " << n << " " << asteroids[n].vx << "\n";
-            cout << "Velocidad del asteroide 2 y: " << n << " " << asteroids[n].vy << "\n";
-            cout << "Fuerza del asteroide 2 x: " << n << " " << forceX[n] << "\n";
-            cout << "Fuerza del asteroide 2 y: " << n << " " << forceY[n] << "\n";
-
-            change_element_position(&asteroids[m], forceX[m], forceY[m]);
-            map_collisions[m][n] = false;
-            map_collisions[n][m] = false;
-            if(distance_between_elements(asteroids[m], asteroids[n]) <= 2){
-              collision_handling(&asteroids[m], &asteroids[n]);
-            }
-            asteroids[m].collisions -= 1;
-            asteroids[n].collisions -= 1;
-
-            cout << "Nº colisiones del asteroide 1 (despues): " << m << " " << asteroids[m].collisions << "\n";
-            cout << "Nº colisiones del asteroide 2 (despues): " << n << " " << asteroids[n].collisions << "\n";
-            cout << "Velocidad del asteroide 1 x: " << m << " " << asteroids[m].vx << "\n";
-            cout << "Velocidad del asteroide 1 y: " << m << " " << asteroids[m].vy << "\n";
-            cout << "Fuerza del asteroide 1 x: " << m << " " << forceX[m] << "\n";
-            cout << "Fuerza del asteroide 1 y: " << m << " " << forceY[m] << "\n";
-            cout << "Velocidad del asteroide 2 x: " << n << " " << asteroids[n].vx << "\n";
-            cout << "Velocidad del asteroide 2 y: " << n << " " << asteroids[n].vy << "\n";
-            cout << "Fuerza del asteroide 2 x: " << n << " " << forceX[n] << "\n";
-            cout << "Fuerza del asteroide 2 y: " << n << " " << forceY[n] << "\n";
-            */
   }
 
 
