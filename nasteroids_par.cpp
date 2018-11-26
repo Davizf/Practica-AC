@@ -148,7 +148,7 @@ int main(int argc, char *argv[]) {
       //Possible collisions with edges
       #pragma omp parallel for
       for(int z = 0; z < num_asteroids; z++){
-        edge_handling(&asteroids[z],i);
+        edge_handling(&asteroids[z]);
       }
 
       //Possible collisions
