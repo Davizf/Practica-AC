@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include "SpaceObject.h"
 #include <fstream>
-#include "math_functions_seq.cpp"
+#include "math_functionsv1.cpp"
 #include <iomanip>
 #include <time.h>
 using namespace std;
