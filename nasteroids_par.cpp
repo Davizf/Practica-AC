@@ -137,16 +137,7 @@ int main(int argc, char *argv[]) {
           forceX[j] += planet_forces[0];
 	  forceY[j] += planet_forces[1];    	      	
 	}
-      }
-
-      //Generating init_conf_txt
-      ofstream init;
-      init.open("forces_par.txt");
-      //Asteroids'data
-      for(int x = 0; x < num_asteroids; x++){
-        init << fixed << setprecision(10)  << forceX[x] << " " << forceY[x] << " " << "\n";
-      }
-      init.close();	  	
+      }	  	
 
       //Update coordinates and speeds    
       #pragma omp parallel for
