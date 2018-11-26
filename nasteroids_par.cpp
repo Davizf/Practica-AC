@@ -51,7 +51,7 @@ int main(int argc, char *argv[]) {
   vector<double> asteroid_forces (2, 0);
   vector<double> planet_forces (2, 0);
   int l, k;
-  
+
   //Creating asteroids...
   for(int i = 0; i < num_asteroids; i++){
     asteroid = new SpaceObject(xdist(re), ydist(re), 0.0, 0.0, mdist(re));
@@ -102,8 +102,8 @@ int main(int argc, char *argv[]) {
         asteroids[j].before_vx = asteroids[j].vx;
 	asteroids[j].before_vy = asteroids[j].vy;
 	asteroids[j].before_x = asteroids[j].x;
-	asteroids[j].before_y = asteroids[j].y;	  		
-      } 
+	asteroids[j].before_y = asteroids[j].y;
+      }
 
       #pragma omp parallel for private(asteroid_forces, k)  collapse(2)
       for(int j = 0; j < num_asteroids; j++){
@@ -115,16 +115,16 @@ int main(int argc, char *argv[]) {
 	      each_asteroid_forcesY[j][k] += asteroid_forces[1];
 	      each_asteroid_forcesX[k][j] += (asteroid_forces[0] * -1);
 	      each_asteroid_forcesY[k][j] += (asteroid_forces[1] * -1);
-	    }		          		
-	  }            	          		
-	} 
+	    }
+	  }
+	}
       }
 
       #pragma omp parallel for private(k) collapse(2)
       for(int j = 0; j < num_asteroids; j++){
         for(k = 0; k < num_asteroids; k++){
 	  forceX[j] += each_asteroid_forcesX[j][k];
-	  forceY[j] += each_asteroid_forcesY[j][k];		
+	  forceY[j] += each_asteroid_forcesY[j][k];
 	}
       }
 
@@ -135,11 +135,11 @@ int main(int argc, char *argv[]) {
 	for(l = 0; l < num_planets; l++){
           planet_forces = normal_movement(asteroids[j], planets[l]);
           forceX[j] += planet_forces[0];
-	  forceY[j] += planet_forces[1];    	      	
+	  forceY[j] += planet_forces[1];
 	}
-      }	  	
+      }
 
-      //Update coordinates and speeds    
+      //Update coordinates and speeds
       #pragma omp parallel for
       for(int m = 0; m < num_asteroids; m++){
         change_element_position(&asteroids[m], forceX[m], forceY[m]);
