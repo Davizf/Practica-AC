@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
   vector<vector<double>> each_asteroid_forcesY (num_asteroids, vector<double> (num_asteroids, 0));
   vector<double> asteroid_forces (2, 0);
   vector<double> planet_forces (2, 0);
-  int o, l, k;
+  int l, k;
   
   //Creating asteroids...
   for(int i = 0; i < num_asteroids; i++){
@@ -122,7 +122,7 @@ int main(int argc, char *argv[]) {
 
       #pragma omp parallel for private(k) collapse(2)
       for(int j = 0; j < num_asteroids; j++){
-        for(int k = 0; k < num_asteroids; k++){
+        for(k = 0; k < num_asteroids; k++){
 	  forceX[j] += each_asteroid_forcesX[j][k];
 	  forceY[j] += each_asteroid_forcesY[j][k];		
 	}
@@ -132,7 +132,7 @@ int main(int argc, char *argv[]) {
       #pragma omp parallel for private(planet_forces, l) collapse(2)
       for(int j = 0; j < num_asteroids; j++){
         //Planet forces
-	for(int l = 0; l < num_planets; l++){
+	for(l = 0; l < num_planets; l++){
           planet_forces = normal_movement(asteroids[j], planets[l]);
           forceX[j] += planet_forces[0];
 	  forceY[j] += planet_forces[1];    	      	
