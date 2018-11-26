@@ -3,7 +3,7 @@
 #include <random>
 #include "SpaceObject.h"
 #include <fstream>
-#include "math_functionsv2.cpp"
+#include "math_functionsv1.cpp"
 using namespace std;
 #include <iomanip>
 #include <omp.h>
