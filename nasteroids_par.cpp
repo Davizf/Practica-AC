@@ -90,112 +90,112 @@ int main(int argc, char *argv[]) {
   }
   init.close();
 
-	  //Number of iterations
-	  for(int i = 0; i < num_iterations; i++){
-	  	memset(forceX, 0.0, sizeof(forceX));
-	  	memset(forceY, 0.0, sizeof(forceY));
-	  	fill(each_asteroid_forcesX.begin(), each_asteroid_forcesX.end(), vector<double>(num_asteroids, 0));
-	  	fill(each_asteroid_forcesY.begin(), each_asteroid_forcesY.end(), vector<double>(num_asteroids, 0));
+  //Number of iterations
+    for(int i = 0; i < num_iterations; i++){
+      memset(forceX, 0.0, sizeof(forceX));
+      memset(forceY, 0.0, sizeof(forceY));
+      fill(each_asteroid_forcesX.begin(), each_asteroid_forcesX.end(), vector<double>(num_asteroids, 0));
+      fill(each_asteroid_forcesY.begin(), each_asteroid_forcesY.end(), vector<double>(num_asteroids, 0));
 
-	  	#pragma omp parallel for
-	  	for(int j = 0; j < num_asteroids; j++){
-	      asteroids[j].before_vx = asteroids[j].vx;
-	      asteroids[j].before_vy = asteroids[j].vy;
-	      asteroids[j].before_x = asteroids[j].x;
-	      asteroids[j].before_y = asteroids[j].y;	  		
-	  	} 
+      #pragma omp parallel for
+      for(int j = 0; j < num_asteroids; j++){
+        asteroids[j].before_vx = asteroids[j].vx;
+	asteroids[j].before_vy = asteroids[j].vy;
+	asteroids[j].before_x = asteroids[j].x;
+	asteroids[j].before_y = asteroids[j].y;	  		
+      } 
 
-		#pragma omp parallel for private(asteroid_forces, k)  collapse(2)
-	    for(int j = 0; j < num_asteroids; j++){
-	      for(k = 0; k < num_asteroids; k++){
-	        if((j != k) && (j < k)){
-	          if(distance_between_elements(asteroids[j], asteroids[k]) > 2){
-	          		asteroid_forces = normal_movement(asteroids[j], asteroids[k]);
-					each_asteroid_forcesX[j][k] += asteroid_forces[0];
-					each_asteroid_forcesY[j][k] += asteroid_forces[1];
-					each_asteroid_forcesX[k][j] += (asteroid_forces[0] * -1);
-				  	each_asteroid_forcesY[k][j] += (asteroid_forces[1] * -1);
-			  }		          		
-			}            	          		
-	      } 
-	    }
+      #pragma omp parallel for private(asteroid_forces, k)  collapse(2)
+      for(int j = 0; j < num_asteroids; j++){
+        for(k = 0; k < num_asteroids; k++){
+	  if((j != k) && (j < k)){
+	    if(distance_between_elements(asteroids[j], asteroids[k]) > 2){
+	      asteroid_forces = normal_movement(asteroids[j], asteroids[k]);
+	      each_asteroid_forcesX[j][k] += asteroid_forces[0];
+	      each_asteroid_forcesY[j][k] += asteroid_forces[1];
+	      each_asteroid_forcesX[k][j] += (asteroid_forces[0] * -1);
+	      each_asteroid_forcesY[k][j] += (asteroid_forces[1] * -1);
+	    }		          		
+	  }            	          		
+	} 
+      }
 
-	    #pragma omp parallel for private(k) collapse(2)
-	    for(int j = 0; j < num_asteroids; j++){
-	    	for(int k = 0; k < num_asteroids; k++){
-				forceX[j] += each_asteroid_forcesX[j][k];
-				forceY[j] += each_asteroid_forcesY[j][k];		
-	    	}
-		}
+      #pragma omp parallel for private(k) collapse(2)
+      for(int j = 0; j < num_asteroids; j++){
+        for(int k = 0; k < num_asteroids; k++){
+	  forceX[j] += each_asteroid_forcesX[j][k];
+	  forceY[j] += each_asteroid_forcesY[j][k];		
+	}
+      }
 
-	    //Fixing one asteroid to compare itself to others asteroids/planets
-	    #pragma omp parallel for private(planet_forces, l) collapse(2)
-	    for(int j = 0; j < num_asteroids; j++){
-	      //Planet forces
-	      for(int l = 0; l < num_planets; l++){
-		    planet_forces = normal_movement(asteroids[j], planets[l]);
-		    forceX[j] += planet_forces[0];
-		    forceY[j] += planet_forces[1];    	      	
-	      }
-	  	}
+      //Fixing one asteroid to compare itself to others asteroids/planets
+      #pragma omp parallel for private(planet_forces, l) collapse(2)
+      for(int j = 0; j < num_asteroids; j++){
+        //Planet forces
+	for(int l = 0; l < num_planets; l++){
+          planet_forces = normal_movement(asteroids[j], planets[l]);
+          forceX[j] += planet_forces[0];
+	  forceY[j] += planet_forces[1];    	      	
+	}
+      }
 
-	      //Generating init_conf_txt
-		  ofstream init;
-		  init.open("forces_par.txt");
-		  //Asteroids'data
-		  for(int x = 0; x < num_asteroids; x++){
-		    init << fixed << setprecision(10)  << forceX[x] << " " << forceY[x] << " " << "\n";
-		  }
-		  init.close();	  	
+      //Generating init_conf_txt
+      ofstream init;
+      init.open("forces_par.txt");
+      //Asteroids'data
+      for(int x = 0; x < num_asteroids; x++){
+        init << fixed << setprecision(10)  << forceX[x] << " " << forceY[x] << " " << "\n";
+      }
+      init.close();	  	
 
-	    //Update coordinates and speeds    
-	    #pragma omp parallel for
-		for(int m = 0; m < num_asteroids; m++){
-			change_element_position(&asteroids[m], forceX[m], forceY[m]);
-		}
+      //Update coordinates and speeds    
+      #pragma omp parallel for
+      for(int m = 0; m < num_asteroids; m++){
+        change_element_position(&asteroids[m], forceX[m], forceY[m]);
+      }
 
-		//Possible collisions with edges
-		#pragma omp parallel for
-    	for(int z = 0; z < num_asteroids; z++){
-      		edge_handling(&asteroids[z],i);
-    	}
+      //Possible collisions with edges
+      #pragma omp parallel for
+      for(int z = 0; z < num_asteroids; z++){
+        edge_handling(&asteroids[z],i);
+      }
 
-		//Possible collisions
-		for(int n = 0; n < num_asteroids; n++){
-		  for(int o = 0; o < num_asteroids; o++){
-		    if((n != o) && (n < o)){
-			  if((distance_between_elements(asteroids[n], asteroids[o]) <= 2) && (i > 0)){
-			    collision_handling(&asteroids[n], &asteroids[o]);
-			    asteroids[n].collisions++;
-			    asteroids[o].collisions++;
-			  }
-			}
-		  }
-		}
-
-	    //If there are collisions position changes
-	    #pragma omp parallel for
-	    for(int p = 0; p < num_asteroids; p++){
-	      if(asteroids[p].collisions != 0){
-	        asteroids[p].x = asteroids[p].before_x;
-	        asteroids[p].y = asteroids[p].before_y;
-	        change_element_position(&asteroids[p], forceX[p], forceY[p]);
-	        asteroids[p].collisions = 0;
-	      }
+      //Possible collisions
+      for(int n = 0; n < num_asteroids; n++){
+        for(int o = 0; o < num_asteroids; o++){
+	  if((n != o) && (n < o)){
+	    if((distance_between_elements(asteroids[n], asteroids[o]) <= 2) && (i > 0)){
+	      collision_handling(&asteroids[n], &asteroids[o]);
+	      asteroids[n].collisions++;
+	      asteroids[o].collisions++;
 	    }
 	  }
+	}
+      }
 
-	  //Generating out.txt
-		  ofstream out;
-		  out.open("out.txt");
-		  //Storing final data
-		  for(auto &asteroids: asteroids){
-		    out << fixed << setprecision(3) << asteroids.x << " " << asteroids.y << " " << asteroids.vx << " " << asteroids.vy << " " << asteroids.m << "\n";
-		  }
-		  out.close();
+      //If there are collisions position changes
+      #pragma omp parallel for
+      for(int p = 0; p < num_asteroids; p++){
+        if(asteroids[p].collisions != 0){
+	  asteroids[p].x = asteroids[p].before_x;
+	  asteroids[p].y = asteroids[p].before_y;
+	  change_element_position(&asteroids[p], forceX[p], forceY[p]);
+	  asteroids[p].collisions = 0;
+	}
+      }
+    }
 
-	  double end = omp_get_wtime();
-	  printf("Time = %.16g\n", end - start);
+    //Generating out.txt
+    ofstream out;
+    out.open("out.txt");
+    //Storing final data
+    for(auto &asteroids: asteroids){
+      out << fixed << setprecision(3) << asteroids.x << " " << asteroids.y << " " << asteroids.vx << " " << asteroids.vy << " " << asteroids.m << "\n";
+    }
+    out.close();
 
-  return 0;
+    double end = omp_get_wtime();
+    printf("Time = %.16g\n", end - start);
+
+    return 0;
 }
