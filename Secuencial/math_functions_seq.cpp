@@ -12,8 +12,8 @@ const double sdm = 50;
 const double gravity = 6.674e-5;
 const double time_interval = 0.1;
 const double minimal_distance = 2.0;
-const double width = 200.0;
-const double height = 200.0;
+const double width = 200.000;
+const double height = 200.000;
 const double average_mass = 1000;
 const double mass_standard_deviation = 50;
 
@@ -26,7 +26,6 @@ auto distance_between_elements(SpaceObject n1, SpaceObject n2) {
 
 	return sqrt(first_component + second_component);
 }
-
 
 //Only used if distance is greater than 2 units
 vector<double> normal_movement(SpaceObject n1, SpaceObject n2) {
@@ -82,19 +81,17 @@ auto change_element_position(SpaceObject *n1, double x_axis_forces, double y_axi
 	y_axis_new_pos = n1->y + (y_axis_speed * time_interval);
 
 
-
 	n1->vx = x_axis_speed;
 	n1->vy = y_axis_speed;
 	n1->x = x_axis_new_pos;
 	n1->y = y_axis_new_pos;
 }
 
-
 //Take care of edge colliding...
 auto edge_handling(SpaceObject *n){
 	if (n->x <= 0) {
 		n->x = 2;
-		n->vx *= (-1);
+		n->vx = n->vx * (-1);
 	}
 	if (n->y <= 0) {
 		n->y = 2;
