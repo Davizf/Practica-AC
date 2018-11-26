@@ -44,8 +44,8 @@ int main(int argc, char *argv[]) {
 	                                        std::numeric_limits<double>::max())};
   normal_distribution<double> mdist{mass, sdm};
 
-  double forceX[num_asteroids] = {0.0};
-  double forceY[num_asteroids] = {0.0};
+  vector<double> forceX (num_asteroids, 0);
+  vector<double> forceY (num_asteroids, 0);
   vector<vector<double>> each_asteroid_forcesX (num_asteroids, vector<double> (num_asteroids, 0));
   vector<vector<double>> each_asteroid_forcesY (num_asteroids, vector<double> (num_asteroids, 0));
   vector<double> asteroid_forces (2, 0);
@@ -92,8 +92,8 @@ int main(int argc, char *argv[]) {
 
   //Number of iterations
     for(int i = 0; i < num_iterations; i++){
-      memset(forceX, 0.0, sizeof(forceX));
-      memset(forceY, 0.0, sizeof(forceY));
+      fill(forceX.begin(), forceX.end(), 0);
+      fill(forceY.begin(), forceY.end(), 0);
       fill(each_asteroid_forcesX.begin(), each_asteroid_forcesX.end(), vector<double>(num_asteroids, 0));
       fill(each_asteroid_forcesY.begin(), each_asteroid_forcesY.end(), vector<double>(num_asteroids, 0));
 
