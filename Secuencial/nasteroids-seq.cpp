@@ -104,8 +104,8 @@ int main(int argc, char *argv[]) {
     for(int k = 0; k < num_asteroids; k++){
       //Proceed the sum of forces if it is not the same asteroid
       if((j != k) && (j < k)) {
-        if(distance_between_elements(&asteroids[j], &asteroids[k]) > 2){
-          forces = normal_movement(&asteroids[j], &asteroids[k]);
+        if(distance_between_elements(asteroids[j], asteroids[k]) > 2){
+          forces = normal_movement(asteroids[j], asteroids[k]);
           forceX[j] += forces[0];
           forceY[j] += forces[1];
           forceX[k] -= forces[0];
@@ -115,7 +115,7 @@ int main(int argc, char *argv[]) {
     }
 
     for(int l = 0; l < num_planets; l++){
-        forces = normal_movement(&asteroids[j], &planets[l]);
+        forces = normal_movement(asteroids[j], planets[l]);
         forceX[j] += forces[0];
         forceY[j] += forces[1];
     }
@@ -140,7 +140,7 @@ int main(int argc, char *argv[]) {
       for(int o = 0; o < num_asteroids; o++){
 
         if((n != o) && (n < o)){
-          if((distance_between_elements(&asteroids[n], &asteroids[o]) <= 2) && (i > 0)){
+          if((distance_between_elements(asteroids[n], asteroids[o]) <= 2) && (i > 0)){
             collision_handling(&asteroids[n], &asteroids[o]);
             asteroids[n].collisions++;
             asteroids[o].collisions++;

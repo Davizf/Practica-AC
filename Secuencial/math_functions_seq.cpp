@@ -17,19 +17,19 @@ const double height = 200.0;
 const double average_mass = 1000;
 const double mass_standard_deviation = 50;
 
-auto distance_between_elements(SpaceObject *n1, SpaceObject *n2) {
+auto distance_between_elements(SpaceObject n1, SpaceObject n2) {
 	double first_component;
 	double second_component;
 
-	first_component = pow(n1->x - n2->x, 2);
-	second_component = pow(n1->y - n2->y, 2);
+	first_component = pow(n1.x - n2.x, 2);
+	second_component = pow(n1.y - n2.y, 2);
 
 	return sqrt(first_component + second_component);
 }
 
 
 //Only used if distance is greater than 2 units
-vector<double> normal_movement(SpaceObject *n1, SpaceObject *n2) {
+vector<double> normal_movement(SpaceObject n1, SpaceObject n2) {
 	double slope;
 	double angle;
 	double distance_between_n1_n2 = distance_between_elements(n1, n2);
@@ -38,7 +38,7 @@ vector<double> normal_movement(SpaceObject *n1, SpaceObject *n2) {
 	vector<double> results (2);
 
 	//First, we have to calculate the slope
-	slope = (n1->y - n2->y) / (n1->x - n2->x);
+	slope = (n1.y - n2.y) / (n1.x - n2.x);
 
 	//Check for slope correctness
 	if ((slope > 1) || (slope < -1)) {
@@ -49,8 +49,8 @@ vector<double> normal_movement(SpaceObject *n1, SpaceObject *n2) {
 	angle = atan(slope);
 
 	//Second, we have to calculate forces
-	n1_x_axis_force = ((gravity * n1->m * n2->m) / pow(distance_between_n1_n2,2));
-	n1_y_axis_force = ((gravity * n1->m * n2->m) / pow(distance_between_n1_n2,2));
+	n1_x_axis_force = ((gravity * n1.m * n2.m) / pow(distance_between_n1_n2,2));
+	n1_y_axis_force = ((gravity * n1.m * n2.m) / pow(distance_between_n1_n2,2));
 
 	if (n1_x_axis_force > 200) n1_x_axis_force = 200;
 	if (n1_y_axis_force > 200) n1_y_axis_force = 200;
