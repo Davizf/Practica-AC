@@ -98,8 +98,8 @@ int main(int argc, char *argv[]) {
       fill(forceY.begin(), forceY.end(), 0);
       fill(each_asteroid_forcesX.begin(), each_asteroid_forcesX.end(), vector<double>(num_asteroids, 0));
       fill(each_asteroid_forcesY.begin(), each_asteroid_forcesY.end(), vector<double>(num_asteroids, 0));
-      fill(each_asteroid_planet_forcesX.begin(), each_asteroid_planet_forcesX.end(), vector<double>(num_asteroids, 0));
-      fill(each_asteroid_planet_forcesY.begin(), each_asteroid_planet_forcesY.end(), vector<double>(num_asteroids, 0));
+      fill(each_asteroid_planet_forcesX.begin(), each_asteroid_planet_forcesX.end(), vector<double>(num_planets, 0));
+      fill(each_asteroid_planet_forcesY.begin(), each_asteroid_planet_forcesY.end(), vector<double>(num_planets, 0));
 
       #pragma omp parallel for
       for(int j = 0; j < num_asteroids; j++){
