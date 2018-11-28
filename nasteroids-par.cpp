@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
     num_iterations = atoi(argv[2]);
     num_planets = atoi(argv[3]);
     seed = atoi(argv[4]);
-    if(num_asteroids<0 || num_iterations<0 || num_planets<0 || seed<=0){
+    if(num_asteroids<0 || num_iterations<0 || num_planets<0 || seed<0){
       cout << "nasteroids-seq: Wrong arguments.\nCorrect use:\nnasteroid-seq num_asteroids num_iterations num_planets seed\n";
       return -1;
     }
@@ -48,6 +48,8 @@ int main(int argc, char *argv[]) {
   vector<double> forceY (num_asteroids, 0);
   vector<vector<double>> each_asteroid_forcesX (num_asteroids, vector<double> (num_asteroids, 0));
   vector<vector<double>> each_asteroid_forcesY (num_asteroids, vector<double> (num_asteroids, 0));
+  vector<vector<double>> each_asteroid_planet_forcesX (num_asteroids, vector<double> (num_planets, 0));
+  vector<vector<double>> each_asteroid_planet_forcesY (num_asteroids, vector<double> (num_planets, 0));
   vector<double> asteroid_forces (2, 0);
   vector<double> planet_forces (2, 0);
   int l, k;
@@ -96,6 +98,8 @@ int main(int argc, char *argv[]) {
       fill(forceY.begin(), forceY.end(), 0);
       fill(each_asteroid_forcesX.begin(), each_asteroid_forcesX.end(), vector<double>(num_asteroids, 0));
       fill(each_asteroid_forcesY.begin(), each_asteroid_forcesY.end(), vector<double>(num_asteroids, 0));
+      fill(each_asteroid_planet_forcesX.begin(), each_asteroid_planet_forcesX.end(), vector<double>(num_asteroids, 0));
+      fill(each_asteroid_planet_forcesY.begin(), each_asteroid_planet_forcesY.end(), vector<double>(num_asteroids, 0));
 
       #pragma omp parallel for
       for(int j = 0; j < num_asteroids; j++){
@@ -132,12 +136,20 @@ int main(int argc, char *argv[]) {
       #pragma omp parallel for private(planet_forces, l) collapse(2)
       for(int j = 0; j < num_asteroids; j++){
         //Planet forces
-	for(l = 0; l < num_planets; l++){
+	       for(l = 0; l < num_planets; l++){
           planet_forces = normal_movement(asteroids[j], planets[l]);
-          forceX[j] += planet_forces[0];
-	  forceY[j] += planet_forces[1];
+          each_asteroid_planet_forcesX[j][l] += planet_forces[0];
+	        each_asteroid_planet_forcesY[j][l] += planet_forces[1];
+	       }
+      }
+      #pragma omp parallel for private(l) collapse(2)
+      for(int j = 0; j < num_asteroids; j++){
+        for(l = 0; l < num_planets; l++){
+	  forceX[j] += each_asteroid_planet_forcesX[j][l];
+	  forceY[j] += each_asteroid_planet_forcesY[j][l];
 	}
       }
+
 
       //Update coordinates and speeds
       #pragma omp parallel for
@@ -190,3 +202,4 @@ int main(int argc, char *argv[]) {
 
     return 0;
 }
+
